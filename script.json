@@ -1,0 +1,36 @@
+{
+    "nodes": {
+        "counter": "counter",
+        "format_filename": "format<INT index>",
+        "reader": "read_jpg",
+        "stack": "stack",
+        "enhancer": "enhancer",
+        "enhance_filter": "filter<IMAGE input>",
+        "saver_res": "save_jpg",
+        "saver_enh": "save_jpg",
+        "print": "print"
+    },
+    "constants": {
+        "counter.min": 0,
+        "counter.max": 10,
+        "format_filename.input": "img_%d.jpg",
+        "stack.count": 10,
+        "stack.method": "median",
+        "saver_res.filename": "result.jpg",
+        "saver_enh.filename": "enhanced.jpg"
+    },
+    "links": {
+        "counter.index": "format_filename.index",
+        "format_filename.output": "reader.filename",
+        "format_filename.error": "print.input",
+        "reader.image": "stack.input",
+        "reader.error": "print.input",
+        "stack.output": ["saver_res.image", "enhancer.input"],
+        "saver_res.error": "print.input",
+        "enhancer.output": "enhance_filter.input",
+        "enhancer.max_enhanced": "enhance_filter.condition",
+        "enhance_filter.output_true": "saver_enh.image",
+        "enhance_filter.output_false": "enhancer.input",
+        "saver_enh.error": "print.input"
+    }
+}
